@@ -1,0 +1,81 @@
+<div *ngIf="!isAdmin()">
+    <h2>
+        401: Unauthorized!!!
+    </h2>
+</div>
+
+
+<div *ngIf="isAdmin()">
+    <h2 *ngIf="inventory.length===0">
+        No menu Available right now.
+    </h2>
+    <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="inventory.length>0">
+        <thead>
+            <tr>
+                <th>Dish Name</th>
+                <th>Cusine</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor='let dish of inventory; let i=index'>
+                <td>{{ dish.name }}</td>
+                <td>{{ dish.cusine }}</td>
+                <td>{{ dish.price }}</td>
+                <td>{{ dish.description }}</td>
+                <td>
+                    <button type="button" *ngIf="dish.price" (click)="handleViewDishClick(inventory[i].id)"
+                        class="btn btn-primary">
+                        View
+                    </button>&nbsp;
+
+                    <button class="btn btn-info" (click)="handleEditDishClick(i)" data-bs-toggle="modal"
+                        data-bs-target="#editDishModal">Edit</button>&nbsp;
+                    <button class="btn btn-danger" (click)="handleDelete(i)">Delete</button>&nbsp;
+
+                    <!-- Edit Modal -->
+                    <div class="modal fade" id="editDishModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true" *ngIf="dishIdx>=0">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Dish
+                                        {{inventory[dishIdx].name}}
+                                    </h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form #form="ngForm" (ngSubmit)="handleEditDish()">
+                                        <div class="mb-3">
+                                            <label for="title" class="form-label">Dish Name</label>
+                                            <input type="text" class="form-control" id="name" name="name"
+                                                placeholder="Dish Name" [(ngModel)]="editModel.name">
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="price" class="form-label">Price</label>
+                                            <input type="number" class="form-control" id="price" name="price"
+                                                placeholder="Price" [(ngModel)]="editModel.price">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="description" class="form-label">Description</label>
+                                            <textarea type="number" class="form-control" id="description" name="description"
+                                                placeholder="Price" [(ngModel)]="editModel.description"></textarea>
+
+                                        </div>
+                                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Edit
+                                            Dish</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

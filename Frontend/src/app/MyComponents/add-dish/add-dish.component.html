@@ -1,0 +1,30 @@
+<div *ngIf="!isAdmin()">
+    <h2>
+        401: Unauthorized!!!
+    </h2>
+</div>
+
+<div *ngIf="isAdmin()">
+    <h2>Add new Dish</h2>
+    <br>
+
+    <form #form="ngForm" class="w-50" (ngSubmit)="handleAddDish()">
+        <div class="mb-3">
+            <label for="title" class="form-label">Dish Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Dish Name"
+                [(ngModel)]="dish.name">
+        </div>
+        <div class="mb-3">
+            <label for="title" class="form-label">Price</label>
+            <input type="number" class="form-control" id="price" name="price" placeholder="Price"
+                [(ngModel)]="dish.price">
+        </div>
+
+        <div class="mb-3">
+            <label for="title" class="form-label">Description</label>
+            <textarea class="form-control" id="description" name="description" placeholder="Description"
+                [(ngModel)]="dish.description"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Add new Dish</button>
+    </form>
+</div>
